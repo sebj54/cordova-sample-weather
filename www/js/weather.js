@@ -1,9 +1,7 @@
 var weather = {
     APIUrl: 'https://api.openweathermap.org/data/2.5/weather?APPID=c612b85f3be89e4849cb46bb755f8eb8&units=metric&lang=fr',
 
-    getFromAPI: function(cityName) {
-        var url = weather.APIUrl + '&q=' + cityName
-
+    getFromAPI: function(url) {
         $('#weather-spinner').show()
         $('#weather-row, #weather-alert').hide()
 
@@ -26,6 +24,16 @@ var weather = {
                 $('#weather-spinner').hide()
                 $('#weather-alert').show()
             })
+    },
+
+    getFromAPIFromCity: function(cityName) {
+        var url = weather.APIUrl + '&q=' + cityName
+        weather.getFromAPI(url)
+    },
+
+    getFromAPIFromPosition: function(position) {
+        var url = weather.APIUrl + '&lat=' + position.coords.latitude + '&lon=' + position.coords.longitude
+        weather.getFromAPI(url)
     },
 
     getEmojiFromIconCode: function(iconCode) {
@@ -57,6 +65,27 @@ var weather = {
         event.preventDefault()
 
         var city = $('#weather-search-city').val()
-        weather.getFromAPI(city)
+        weather.getFromAPIFromCity(city)
+    },
+
+    getLocation: function(event) {
+        event.preventDefault()
+
+        $('#weather-spinner').show()
+        $('#weather-row, #weather-alert').hide()
+    
+        navigator.geolocation.getCurrentPosition(weather.locationSuccess, weather.locationError)
+    },
+
+    locationSuccess: function(position) {
+        weather.getFromAPIFromPosition(position)
+    },
+
+    // onError Callback receives a PositionError object
+    locationError: function(error) {
+        $('#weather-alert').show()
+        $('#weather-spinner').hide()
+
+        console.error(error)
     },
 }

@@ -14,11 +14,13 @@ var app = {
 
         weather.getFromAPI('Nancy')
 
-        $('#weather-retry').click(function() {
-            weather.getFromAPI('Nancy')
-        })
+        // $('#weather-retry').click(function() {
+        //     weather.getFromAPI('Nancy')
+        // })
 
         $('#search-city-form').submit(weather.searchFromForm)
+
+        $('#locate-me-button').click(weather.getLocation)
     },
 };
 
