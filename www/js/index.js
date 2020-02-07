@@ -12,8 +12,6 @@ var app = {
     onDeviceReady: function() {
         console.log('device is ready')
 
-        weather.getFromAPI('Nancy')
-
         // $('#weather-retry').click(function() {
         //     weather.getFromAPI('Nancy')
         // })
@@ -21,6 +19,9 @@ var app = {
         $('#search-city-form').submit(weather.searchFromForm)
 
         $('#locate-me-button').click(weather.getLocation)
+
+        $('#weather-prev').click(weather.decrementInterator)
+        $('#weather-next').click(weather.incrementInterator)
     },
 };
 
